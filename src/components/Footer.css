@@ -1,0 +1,17 @@
+.Footer{
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.footer-text{
+  font-size: 0.8rem;
+}
+
+.Footer a{
+  font-family: 'Kdam Thmor Pro', monospace;
+  text-decoration: underline dotted white;
+  color: inherit;
+}

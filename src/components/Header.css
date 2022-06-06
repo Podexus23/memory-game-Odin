@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Kdam Thmor Pro";
+  src: url('../assets/fonts/KdamThmorPro-Regular.ttf');
+}
+
+.Header{
+  padding: 20px 0;
+}
+
+.header-title{
+  font-family: "Kdam Thmor Pro", sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+}
