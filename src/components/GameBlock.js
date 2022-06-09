@@ -1,54 +1,49 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from 'react';
 import Card from './pokeCard';
-import './pokeCard.css';
 
-function random(min, max){
+function random(min, max) {
   return Math.floor(Math.random() * max + 1 - min);
 }
+
 let counter = 4;
 
-async function makeCard(counter){
-  let cards = new Array(counter).fill(1);
-  cards = cards.map(() => {
-    let newPoke = random(0, 5);
-    return <Card imgSrc={newPoke} pokeName={newPoke}/>
-  })
-  return (
-    <div>
-      {cards}
-    </div>
-  )
-}
-
-async function fetchData(){
-  const url = `https://pokeapi.co/api/v2/pokemon/99`;
+async function fetchData(num) {
+  const url = `https://pokeapi.co/api/v2/pokemon/${num}`;
   const data = await fetch(url);
   let cherryAPI = await data.json();
   return cherryAPI;
-};
+}
+
+async function cardsValue(counter = 0) {
+  let value = [];
+  while (value.length !== counter) {
+    const newNumber = random(0, 30);
+    const pokemon = await fetchData(newNumber);
+    value.push({ src: pokemon.sprites.front_default, name: pokemon.name });
+  }
+  return value;
+}
 
 let GameBlock = () => {
-  let cards = new Array(counter).fill(1);
-  let [pokeId, setPokeId] = useState(cards);
+  let [pokeCards, setPokeCards] = useState(createCards(counter));
 
-  useEffect(()=> {
-    async function addData(arr){
-      for await (let elem of arr) {
-        let data = await fetchData();
-        arr[elem] = <Card imgSrc={data.sprites.front_default} pokeName={data.id}/>;
-        
+  function createCards(counter, value = []) {
+    let cards = new Array(counter).fill(1);
+    return cards.map((card, i) => {
+      if (value.length > 0) {
+        return <Card imgSrc={value[i].src} pokeName={value[i].name} key={i} />;
       }
-      setPokeId(arr);
-    }
-      
-    addData(cards);
-  },[pokeId])
+    });
+  }
 
-  return (
-      <div>
-        {pokeId}
-      </div>
-  )
-}
+  useEffect(() => {
+    (async () => {
+      let newCards = createCards(4, await cardsValue(counter));
+      setPokeCards(newCards);
+    })();
+  }, []);
+
+  return <div>{pokeCards}</div>;
+};
 
 export default GameBlock;

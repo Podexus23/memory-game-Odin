@@ -6,17 +6,13 @@ import GameBlock from './components/GameBlock';
 
 console.clear();
 function App() {
-  
-
-  
   return (
     <div className="App">
-      <Header className="Header"/>
-      <GameBlock className="GameBlock"/>
-      <Footer className="Footer"/>
+      <Header className="Header" />
+      <GameBlock className="GameBlock" />
+      <Footer className="Footer" />
     </div>
   );
 }
 
 export default App;
-
