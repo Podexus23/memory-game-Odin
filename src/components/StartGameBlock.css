@@ -1,0 +1,16 @@
+.start-button {
+  padding: 0.5rem 1rem;
+  font-family: 'Kdam Thmor Pro';
+  font-size: 2rem;
+  background-color: #ff3600;
+  color: yellow;
+  border: 2px solid rgb(251, 251, 56);
+  border-radius: 15px;
+  transition: transform 0.1s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0px 0px 4px 2px #eaedc2;
+}
+
+.start-button:hover {
+  transform: scale(1.1);
+}
