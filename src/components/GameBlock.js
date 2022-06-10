@@ -5,7 +5,7 @@ import Card from './pokeCard';
 import GameGenerator from './GameGenerator';
 
 let GameBlock = () => {
-  let [pokeCards, setPokeCards] = useState();
+  let [pokeCards, setPokeCards] = useState(GameGenerator.choosePlayableCards());
   let [score, setScore] = useState(0);
 
   function createCards(id = []) {
@@ -21,6 +21,7 @@ let GameBlock = () => {
     console.log(GameGenerator.allCards);
     console.log(id);
     setScore(score + 1);
+    GameGenerator.cardClicked(id, score);
   }
 
   useEffect(() => {
@@ -32,7 +33,7 @@ let GameBlock = () => {
 
   return (
     <div className="GameBlock-wrapper">
-      <p className="game-score">{score}</p>
+      <p className="game-score">Score: {score}</p>
       <div className="GameBlock">{pokeCards}</div>
     </div>
   );

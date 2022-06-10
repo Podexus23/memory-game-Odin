@@ -7,6 +7,7 @@ import StartGameBlock from './components/StartGameBlock';
 import GameGenerator from './components/GameGenerator';
 
 console.clear();
+
 function App() {
   let [mainBlock, setMainBlock] = useState(
     <StartGameBlock startClick={startGame} />
@@ -15,7 +16,7 @@ function App() {
   (() => {
     //for now it's fixed, later i'll add settings
     //for difficulty and quantity of species
-    GameGenerator.makingCardPool(25);
+    GameGenerator.makingCardPool(15);
   })();
 
   function startGame(data) {
