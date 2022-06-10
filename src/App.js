@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import GameBlock from './components/GameBlock';
 import StartGameBlock from './components/StartGameBlock';
+import GameGenerator from './components/GameGenerator';
 
 console.clear();
 function App() {
@@ -11,8 +12,13 @@ function App() {
     <StartGameBlock startClick={startGame} />
   );
 
+  (() => {
+    //for now it's fixed, later i'll add settings
+    //for difficulty and quantity of species
+    GameGenerator.makingCardPool(25);
+  })();
+
   function startGame(data) {
-    console.log(data);
     setMainBlock(<GameBlock className="GameBlock" />);
   }
 

@@ -4,3 +4,10 @@
   gap: 15px 15px;
   justify-content: center;
 }
+
+.GameBlock-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px 15px;
+  align-items: center;
+}
