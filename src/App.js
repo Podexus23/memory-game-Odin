@@ -1,38 +1,40 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import GameBlock from './components/GameBlock';
+import StartGameBlock from './components/StartGameBlock';
+import EndGameBlock from './components/EndGameBlock';
+import GameGenerator from './components/GameGenerator';
 
 console.clear();
-function App() {
-  const [cherry, setCherry] = useState('');
-  const [img, setImg] = useState();
-  
-  useEffect(() => {
-    async function fetchData(url, text){
-      const data = await fetch(url);
-      let cherryAPI = await data.json();
-      let id = cherryAPI.id
-      console.log(cherryAPI, text)
-      setCherry(cherryAPI.id);
-      setImg(cherryAPI.sprites.front_default)
-    }
-    fetchData('https://pokeapi.co/api/v2/pokemon/1/', 'pokemon')
-    fetchData('https://pokeapi.co/api/v2/pokemon/151', 'pokemon')
-  }, [cherry, img])
 
-  
+function App() {
+  let [mainBlock, setMainBlock] = useState(
+    <StartGameBlock startClick={startGame} />
+  );
+
+  (() => {
+    //for now it's fixed, later i'll add settings
+    //for difficulty and quantity of species
+    GameGenerator.makingCardPool(15);
+  })();
+
+  function checkStatus(isOver, score){
+    if(isOver) setMainBlock(<EndGameBlock score={score}/>)
+  }
+
+  function startGame(data) {
+    setMainBlock(<GameBlock checkStatus={checkStatus} className="GameBlock" />);
+  }
+
   return (
     <div className="App">
-      <Header className="Header"/>
-      <GameBlock className="GameBlock"/>
-      Pokemon id is {cherry}
-      <img src={img} />
-      <Footer className="Footer"/>
+      <Header className="Header" />
+      {mainBlock}
+      <Footer className="Footer" />
     </div>
   );
 }
 
 export default App;
-

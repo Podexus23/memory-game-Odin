@@ -1,0 +1,15 @@
+.GameBlock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 15px;
+  justify-content: center;
+}
+
+.GameBlock-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px 15px;
+  align-items: center;
+
+  font-family: 'Kdam Thmor Pro', sans-serif;
+}
