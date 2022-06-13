@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.925a596d.css",
+    "main.js": "/static/js/main.25f1bbb7.js",
+    "static/js/787.69b12325.chunk.js": "/static/js/787.69b12325.chunk.js",
+    "static/media/KdamThmorPro-Regular.ttf": "/static/media/KdamThmorPro-Regular.e59b02a42579bc13a468.ttf",
+    "index.html": "/index.html",
+    "main.925a596d.css.map": "/static/css/main.925a596d.css.map",
+    "main.25f1bbb7.js.map": "/static/js/main.25f1bbb7.js.map",
+    "787.69b12325.chunk.js.map": "/static/js/787.69b12325.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.925a596d.css",
+    "static/js/main.25f1bbb7.js"
+  ]
+}
