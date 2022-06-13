@@ -38,51 +38,65 @@ let GameGenerator = (function () {
     const main = allCards.mainPool;
     const onBoard = allCards.onBoard;
     if (allCards.score < difficulty.easy.border) {
-      earlyGame(main, onBoard);
+      _earlyGame(main, onBoard);
     } else if (
       allCards.score >= difficulty.easy.border &&
       allCards.score < difficulty.middle.border
     ) {
-      middleGame(main, onBoard);
+      _middleGame(main, onBoard);
     } else if (
       allCards.score >= difficulty.middle.border &&
       allCards.score < difficulty.hard.border
     ) {
-      endGame(main, onBoard);
+      _endGame(main, onBoard);
     } else {
       console.log('ups, that all mate');
     }
     return onBoard;
   }
 
-  function earlyGame(main, onBoard) {
+  function _earlyGame(main, onBoard) {
     while (onBoard.length < difficulty.easy.cards) {
       let number = main[random(main.length)];
       if (!onBoard.includes(number)) onBoard.push(number);
     }
   }
 
-  function middleGame(main, onBoard) {
+  function _middleGame(main, onBoard) {
     let cached = allCards.catchedPoke;
-    while (onBoard.length < 4) {
+    while (onBoard.length < difficulty.middle.cards) {
       let numberMain = main[random(main.length)];
       let numberCached = cached[random(cached.length)];
-      if (
-        onBoard.includes(numberMain) ||
-        allCards.catchedPoke.includes(numberMain)
-      ) {
-        console.log('already in array');
-      } else onBoard.push(numberMain);
+
+      if (onBoard.length === difficulty.middle.cards - 1) {
+        onBoard.push(numberCached);
+        allCards.onBoard = _shuffleBoard(onBoard);
+      } else if (!onBoard.includes(numberMain)) onBoard.push(numberMain);
+    }
+    console.log('hi from mid');
+  }
+
+  function _endGame(main, onBoard) {
+    let cached = allCards.catchedPoke;
+    while (onBoard.length < difficulty.hard.cards) {
+      let numberMain = main[random(main.length)];
+      let numberCached = cached[random(cached.length)];
+
+      if (onBoard.length >= difficulty.hard.cards - 2) {
+        if (!onBoard.includes(numberCached)) onBoard.push(numberCached);
+        allCards.onBoard = _shuffleBoard(onBoard);
+      } else if (!onBoard.includes(numberMain)) onBoard.push(numberMain);
     }
   }
 
-  function endGame(main, onBoard) {
-    while (onBoard.length < 5) {
-      let number = main[random(main.length)];
-      if (onBoard.includes(number) || allCards.catchedPoke.includes(number)) {
-        console.log('already in array');
-      } else onBoard.push(number);
-    }
+  function _shuffleBoard(cards) {
+    console.log(cards);
+    let shuffled = cards
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+    console.log(shuffled);
+    return shuffled;
   }
 
   function cardClicked(id, score) {
