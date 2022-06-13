@@ -31,7 +31,7 @@ let GameGenerator = (function () {
     while (main.length < number) {
       main.push(main.length + 1);
     }
-    difficulty.hard.border = number;
+    difficulty.hard.border = number - 1;
   }
 
   function choosePlayableCards() {
@@ -73,7 +73,6 @@ let GameGenerator = (function () {
         allCards.onBoard = _shuffleBoard(onBoard);
       } else if (!onBoard.includes(numberMain)) onBoard.push(numberMain);
     }
-    console.log('hi from mid');
   }
 
   function _endGame(main, onBoard) {
@@ -81,29 +80,45 @@ let GameGenerator = (function () {
     while (onBoard.length < difficulty.hard.cards) {
       let numberMain = main[random(main.length)];
       let numberCached = cached[random(cached.length)];
-
-      if (onBoard.length >= difficulty.hard.cards - 2) {
+      
+      if(main.length < 3 && onBoard.length === 3){
+        if (!onBoard.includes(numberMain)) onBoard.push(numberMain);
+        if (!onBoard.includes(numberCached)) onBoard.push(numberCached);
+        if (onBoard.length !== 5) continue; 
+        allCards.onBoard = _shuffleBoard(onBoard);
+        console.log(allCards.onBoard)
+      } else if(cached.length > main.length && onBoard.length < 3){
+        if (!onBoard.includes(numberCached)) onBoard.push(numberCached);
+      } else if (cached.length < main.length && onBoard.length >= 3) {
         if (!onBoard.includes(numberCached)) onBoard.push(numberCached);
         allCards.onBoard = _shuffleBoard(onBoard);
-      } else if (!onBoard.includes(numberMain)) onBoard.push(numberMain);
+      } else if (!onBoard.includes(numberMain) && onBoard.length !== 5){
+         onBoard.push(numberMain);
+         allCards.onBoard = _shuffleBoard(onBoard);
+      }
     }
   }
 
   function _shuffleBoard(cards) {
-    console.log(cards);
     let shuffled = cards
       .map((value) => ({ value, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value);
-    console.log(shuffled);
     return shuffled;
   }
 
+  function isGameOver(id){
+    if (allCards.catchedPoke.includes(id)) return true;
+    return false;
+  }
+
   function cardClicked(id, score) {
+    let result = isGameOver(id);
     allCards.mainPool = allCards.mainPool.filter((e) => e !== id);
     allCards.catchedPoke.push(id);
     allCards.score = score;
     allCards.onBoard = [];
+    return result;
   }
 
   return { allCards, makingCardPool, choosePlayableCards, cardClicked };

@@ -4,7 +4,7 @@ import uniqid from 'uniqid';
 import Card from './pokeCard';
 import GameGenerator from './GameGenerator';
 
-let GameBlock = () => {
+let GameBlock = (props) => {
   let [pokeCards, setPokeCards] = useState(GameGenerator.choosePlayableCards());
   let [score, setScore] = useState(0);
 
@@ -19,9 +19,11 @@ let GameBlock = () => {
 
   function cardClicker(id) {
     console.log(GameGenerator.allCards);
-    console.log(id);
-    setScore(score + 1);
-    GameGenerator.cardClicked(id, score);
+    let isGameOver = GameGenerator.cardClicked(id, score);
+    if(isGameOver){
+      console.log(`'Game Over! Your result: ${score}`)
+    } else setScore(score + 1);
+    props.checkStatus(isGameOver, score);
   }
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import GameBlock from './components/GameBlock';
 import StartGameBlock from './components/StartGameBlock';
+import EndGameBlock from './components/EndGameBlock';
 import GameGenerator from './components/GameGenerator';
 
 console.clear();
@@ -19,8 +20,12 @@ function App() {
     GameGenerator.makingCardPool(15);
   })();
 
+  function checkStatus(isOver, score){
+    if(isOver) setMainBlock(<EndGameBlock score={score}/>)
+  }
+
   function startGame(data) {
-    setMainBlock(<GameBlock className="GameBlock" />);
+    setMainBlock(<GameBlock checkStatus={checkStatus} className="GameBlock" />);
   }
 
   return (
